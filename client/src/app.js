@@ -1,17 +1,26 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore } from 'redux';
 import { Provider } from 'react-redux';
+import {
+  BrowserRouter as Router,
+  Route,
+  Link
+} from 'react-router-dom';
 
-import reducer from './reducers/index';
+import * as mediaActionCreators from "./data/media/actions.js"
 
-import ControlContainer from "./ControlContainer.jsx";
+import store from "./store.js"
+import Media from "./scenes/media.jsx";
 
-const store = createStore( reducer );
+const initialRender = () => {
+  ReactDOM.render(
+    <Provider store={ store }>
+      <Router>
+        <Route path="/media" component={ Media }/>
+      </Router>
+    </Provider>,
+    document.getElementById( "app" )
+  )
+}
 
-ReactDOM.render(
-  <Provider store={ store }>
-    <ControlContainer />
-  </Provider>,
-  document.getElementById( "app" )
-)
+initialRender();
