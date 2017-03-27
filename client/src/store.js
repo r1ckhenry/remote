@@ -1,10 +1,10 @@
 import { createStore, combineReducers } from 'redux';
 
-import { reducer as dataReducer } from "./data/reducer.js"
+import { reducer as data } from "./data/reducer.js";
 
 const appReducer = combineReducers({
-  data: dataReducer
-})
+  data
+});
 
 const store = createStore( appReducer );
 

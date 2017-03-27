@@ -58,7 +58,7 @@
 	
 	var _reactRouterDom = __webpack_require__(237);
 	
-	var _actions = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./data/media/actions.js\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var _actions = __webpack_require__(257);
 	
 	var mediaActionCreators = _interopRequireWildcard(_actions);
 	
@@ -85,6 +85,8 @@
 	    )
 	  ), document.getElementById("app"));
 	};
+	
+	mediaActionCreators.get()(_store2.default.dispatch);
 	
 	initialRender();
 
@@ -25768,7 +25770,8 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var Media = function Media() {
+	var Media = function Media(state) {
+	
 	  return _react2.default.createElement(
 	    'div',
 	    null,
@@ -25777,6 +25780,7 @@
 	};
 	
 	var mapStateToProps = function mapStateToProps(state) {
+	  console.log("state", state);
 	  return state;
 	};
 	
@@ -27060,9 +27064,74 @@
 
 /***/ },
 /* 256 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.reducer = undefined;
+	
+	var _redux = __webpack_require__(178);
+	
+	var _reducer = __webpack_require__(258);
+	
+	var reducer = exports.reducer = _reducer.reducer;
+
+/***/ },
+/* 257 */
 /***/ function(module, exports) {
 
 	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var get = exports.get = function get(data) {
+	
+	  return function (dispatch) {
+	    return fetch("/api/media").then(function (response) {
+	      return response.json();
+	    }).then(function (media) {
+	      dispatch(update(media));
+	    });
+	  };
+	};
+	
+	var update = exports.update = function update(media) {
+	
+	  return {
+	    type: "UPDATE_MEDIA",
+	    media: media
+	  };
+	};
+
+/***/ },
+/* 258 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var initialState = {
+	  media: []
+	};
+	
+	var reducer = exports.reducer = function reducer() {
+	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+	  var action = arguments[1];
+	
+	
+	  switch (action.type) {
+	    case "UPDATE_MEDIA":
+	      return Object.assign({}, state, { media: action.media });
+	    default:
+	      return state;
+	  }
+	};
 
 /***/ }
 /******/ ]);

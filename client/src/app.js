@@ -23,4 +23,6 @@ const initialRender = () => {
   )
 }
 
+mediaActionCreators.get()( store.dispatch );
+
 initialRender();

@@ -7,10 +7,6 @@ var recursive = require('recursive-readdir');
 
 app.use(express.static('client/build'));
 
-app.get( '*', function( req, res ) {
-  res.sendFile(path.join(__dirname + '/client/build/index.html'));
-});
-
 app.get( '/api/media', function( req, res ) {
 
   recursive('./media', function (err, files) {
@@ -18,6 +14,10 @@ app.get( '/api/media', function( req, res ) {
     res.json( media )
   });
 
+});
+
+app.get( '*', function( req, res ) {
+  res.sendFile(path.join(__dirname + '/client/build/index.html'));
 });
 
 app.listen( 3030, function() {

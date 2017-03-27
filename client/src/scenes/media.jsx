@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 
 import Nav from "../components/Nav"
 
-const Media = () => {
+const Media = ( state ) => {
+
   return(
     <div>
       <Nav />
@@ -12,6 +13,7 @@ const Media = () => {
 }
 
 const mapStateToProps = ( state ) => {
+  console.log( "state", state )
   return state
 }
 
