@@ -58,10 +58,6 @@
 	
 	var _reactRouterDom = __webpack_require__(237);
 	
-	var _actions = __webpack_require__(257);
-	
-	var mediaActionCreators = _interopRequireWildcard(_actions);
-	
 	var _store = __webpack_require__(255);
 	
 	var _store2 = _interopRequireDefault(_store);
@@ -69,8 +65,6 @@
 	var _media = __webpack_require__(236);
 	
 	var _media2 = _interopRequireDefault(_media);
-	
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -85,8 +79,6 @@
 	    )
 	  ), document.getElementById("app"));
 	};
-	
-	mediaActionCreators.get()(_store2.default.dispatch);
 	
 	initialRender();
 
@@ -25758,6 +25750,8 @@
 	  value: true
 	});
 	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
 	var _react = __webpack_require__(1);
 	
 	var _react2 = _interopRequireDefault(_react);
@@ -25768,23 +25762,72 @@
 	
 	var _Nav2 = _interopRequireDefault(_Nav);
 	
+	var _actions = __webpack_require__(257);
+	
+	var mediaActionCreators = _interopRequireWildcard(_actions);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var Media = function Media(state) {
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
-	  return _react2.default.createElement(
-	    'div',
-	    null,
-	    _react2.default.createElement(_Nav2.default, null)
-	  );
-	};
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Media = function (_React$Component) {
+	  _inherits(Media, _React$Component);
+	
+	  function Media() {
+	    _classCallCheck(this, Media);
+	
+	    return _possibleConstructorReturn(this, (Media.__proto__ || Object.getPrototypeOf(Media)).apply(this, arguments));
+	  }
+	
+	  _createClass(Media, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      mediaActionCreators.get()(this.props.dispatch);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var mediaItems = this.props.media.map(function (item, index) {
+	        return _react2.default.createElement(
+	          'li',
+	          { key: index },
+	          item
+	        );
+	      });
+	
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(_Nav2.default, null),
+	        _react2.default.createElement(
+	          'ul',
+	          null,
+	          mediaItems
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return Media;
+	}(_react2.default.Component);
 	
 	var mapStateToProps = function mapStateToProps(state) {
-	  console.log("state", state);
-	  return state;
+	  return state.data;
 	};
 	
-	exports.default = (0, _reactRedux.connect)(mapStateToProps)(Media);
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return {
+	    dispatch: dispatch
+	  };
+	};
+	
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Media);
 
 /***/ },
 /* 237 */

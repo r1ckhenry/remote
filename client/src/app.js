@@ -7,8 +7,6 @@ import {
   Link
 } from 'react-router-dom';
 
-import * as mediaActionCreators from "./data/media/actions.js"
-
 import store from "./store.js"
 import Media from "./scenes/media.jsx";
 
@@ -22,7 +20,5 @@ const initialRender = () => {
     document.getElementById( "app" )
   )
 }
-
-mediaActionCreators.get()( store.dispatch );
 
 initialRender();
