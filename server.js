@@ -9,7 +9,8 @@ app.use(express.static('client/build'));
 
 app.get( '/api/media', function( req, res ) {
 
-  recursive('./media', function (err, files) {
+  recursive('./client/build/media', function (err, files) {
+
     var media = files
     res.json( media )
   });

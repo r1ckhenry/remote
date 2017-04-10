@@ -8,13 +8,18 @@ import {
 } from 'react-router-dom';
 
 import store from "./store.js"
-import Media from "./scenes/media.jsx";
+
+import Control from "./scenes/control.jsx";
+import Watch from "./scenes/watch.jsx";
 
 const initialRender = () => {
   ReactDOM.render(
     <Provider store={ store }>
       <Router>
-        <Route path="/media" component={ Media }/>
+        <div>
+          <Route path="/watch" component={ Watch }/>
+          <Route path="/control" component={ Control }/>
+        </div>
       </Router>
     </Provider>,
     document.getElementById( "app" )
