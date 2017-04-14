@@ -2,21 +2,39 @@ var moment = require( "moment" )
 
 module.exports = {
 
-  generate: function( collection ) {
-    return collection.map( function( item ) {
-      return "https://www.google.co.uk/flights/#search;f=EDI;t=" + item.code + ";d=2017-12-29;r=2018-01-10"
+  generate: function( collection, days ) {
+    var dates = this.datesFromTodayTo( days )
+
+    var links = collection.map( function( airport ) {
+      return this.createLinks( airport.code, dates )
+    }.bind( this ))
+
+    return [].concat.apply([], links);
+  },
+
+  datesFromTodayTo: function( number ) {
+    var numberOfDaysArr = new Array( number ).fill( null );
+
+    return numberOfDaysArr.map( ( el, i ) => {
+      return moment().add( i, "d" ).format( "YYYY-MM-DD" );
     })
   },
 
-  datesFromTo( startDate, number ) {
-    var numberOfDaysArr = new Array( number ).fill( null );
+  // Look to use map in here
+  createLinks: function( code, dates ) {
+    var links = [];
 
-    var dates = numberOfDaysArr.map( ( el, i ) => {
-      return startDate.add( i, "d" ).format( "YYYY-MM-DD" );
+    dates.forEach( ( date, i ) => {
+
+      var datesSubset = dates.slice( i, dates.length )
+
+      datesSubset.forEach( ( dateSubset, i ) => {
+        var link = "https://www.google.co.uk/flights/#search;f=EDI;t=" + code + ";d=" + date + ";r=" + dateSubset + ""
+        links.push( link )
+      })
+
     })
-
-    return dates
-
+    return links
   }
 
 }
