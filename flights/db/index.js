@@ -6,7 +6,6 @@ module.exports = {
       if ( db ) {
         var collection = db.collection( "airports" );
         collection.find().toArray(function(err, docs){
-          console.log( docs )
           callback(docs.slice( 0, 100 ));
           db.close();
         });
