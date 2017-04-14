@@ -11,11 +11,11 @@ const flights = [ '£289\nround trip\n\n06:50 – 14:15\nBritish Airways\n7h 25m
   '£495\nround trip\n\n06:15 – 15:50\nIcelandair, Air France · HOP!\n9h 35m\n1 stop\n4h 10m in CDG\n' ]
 
 test( "should split array by line return", () => {
-    expect( flightStrings.split( flights[0] ) ).toEqual( ["£289","round trip","","06:50 – 14:15","British Airways","7h 25m","1 stop","2h 30m in LHR","",] )
-})
-
-// describe(  )
-
-test( "returns price as a number", () => {
-    expect( flightStrings.getPrice( flights[0] ) ).toBe( 289 );
+    const expectedResult = {
+      arrTime: "14:15",
+      "depTime": "06:10",
+      "duration": "8h 05m",
+      "price": 295,
+    }
+    expect( flightStrings.convert( flights[1] ) ).toEqual( expectedResult )
 })
