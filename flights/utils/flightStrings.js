@@ -2,15 +2,21 @@ module.exports = {
 
   // ["£289","round trip","","06:50 – 14:15","British Airways","7h 25m","1 stop","2h 30m in LHR","",]
 
-  convert: function( flightString ) {
+  convert: function( flightTo, flightDep, flightRet, flightString ) {
     var flightInfoArr = flightString.split( "\n" );
     var flightInfo = Object.create( null )
 
     flightInfoArr.forEach( ( info ) => {
 
+      flightInfo = Object.assign( {}, flightInfo, {
+        to: flightTo,
+        departureDate: flightDep,
+        returnDate: flightRet
+      })
+
       if ( info.includes( "£" ) ) {
         const priceArr = info.split( "" )
-        const price = Number( priceArr.slice( 1, priceArr.length ).join( "" ) )
+        const price = +priceArr.slice(1, priceArr.length).join("").replace( ",", "" )
         flightInfo = Object.assign( {}, flightInfo, { price: price } )
       }
 

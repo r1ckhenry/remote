@@ -21,20 +21,43 @@ module.exports = {
   },
 
   // Look to use map in here
+  // createLinks: function( code, dates ) {
+  //   var links = [];
+  //
+  //   dates.forEach( ( date, i ) => {
+  //
+  //     var datesSubset = dates.slice( i, dates.length )
+  //
+  //     datesSubset.forEach( ( dateSubset, i ) => {
+  //       var link = "https://www.google.co.uk/flights/#search;f=EDI;t=" + code + ";d=" + date + ";r=" + dateSubset + ""
+  //       links.push( link )
+  //     })
+  //
+  //   })
+  //   return links
+  // }
+
   createLinks: function( code, dates ) {
-    var links = [];
+      var links = [];
 
-    dates.forEach( ( date, i ) => {
+      dates.forEach( ( date, i ) => {
 
-      var datesSubset = dates.slice( i, dates.length )
+        var datesSubset = dates.slice( i, dates.length )
 
-      datesSubset.forEach( ( dateSubset, i ) => {
-        var link = "https://www.google.co.uk/flights/#search;f=EDI;t=" + code + ";d=" + date + ";r=" + dateSubset + ""
-        links.push( link )
+        datesSubset.forEach( ( dateSubset, i ) => {
+          var link = {
+            path: "https://www.google.co.uk/flights/#search;f=EDI;t=" + code + ";d=" + date + ";r=" + dateSubset + "",
+            from: "EDI",
+            depDate: date,
+            retDate: dateSubset,
+            to: code
+          }
+          links.push( link )
+        })
+
       })
+      return links
 
-    })
-    return links
   }
 
 }

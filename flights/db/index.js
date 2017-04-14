@@ -6,10 +6,43 @@ module.exports = {
       if ( db ) {
         var collection = db.collection( "airports" );
         collection.find().toArray(function(err, docs){
-          callback(docs.slice( 0, 100 ));
+          callback(docs.slice( 400,500 ));
           db.close();
         });
       }
     })
+  },
+
+  findOne: function( code, callback ) {
+    var code = code.toUpperCase();
+
+    MongoClient.connect( 'mongodb://localhost:27017/flights', function( err, db ) {
+      if ( db ) {
+        var collection = db.collection( "airports" );
+        var airport = collection.findOne( { code: code } ).then( ( doc ) => {
+            callback( doc )
+            db.close();
+        })
+
+      }
+    })
+  },
+
+  addOne: function( code, route, callback ) {
+    MongoClient.connect( 'mongodb://localhost:27017/flights', function( err, db ) {
+      if ( db ) {
+        var collection = db.collection( "airports" );
+        var doc = collection.findOneAndUpdate( { code: code }, {
+          $push: {
+            routes: route
+          }
+        })
+        db.close();
+
+      }
+    })
   }
+
+
+
 }

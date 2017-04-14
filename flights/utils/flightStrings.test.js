@@ -1,7 +1,7 @@
 const flightStrings = require( "./flightStrings.js" );
 
 const flights = [ '£289\nround trip\n\n06:50 – 14:15\nBritish Airways\n7h 25m\n1 stop\n2h 30m in LHR\n',
-  '£295\nround trip\n\n06:10 – 14:15\nBritish Airways · Iberia\n8h 05m\n1 stop\nChange of airport\n',
+  '£2,995\nround trip\n\n06:10 – 14:15\nBritish Airways · Iberia\n8h 05m\n1 stop\nChange of airport\n',
   '£436\nround trip\n\n17:30 – 23:35\nIcelandair, British Airways\n6h 05m\n1 stop\n1h 35m in LHR\n',
   '£476\nround trip\n\n08:30 – 15:40\nIcelandair, British Airways\n7h 10m\n1 stop\n2h 35m in LHR\n',
   '£289\nround trip\n\n20:35 – 17:55+1\nBritish Airways\n21h 20m\n1 stop\n16h 40m in LHR\n',
@@ -13,9 +13,9 @@ const flights = [ '£289\nround trip\n\n06:50 – 14:15\nBritish Airways\n7h 25m
 test( "should split array by line return", () => {
     const expectedResult = {
       arrTime: "14:15",
-      "depTime": "06:10",
-      "duration": "8h 05m",
-      "price": 295,
+      depTime: "06:10",
+      duration: "8h 05m",
+      price: 2995,
     }
     expect( flightStrings.convert( flights[1] ) ).toEqual( expectedResult )
 })
