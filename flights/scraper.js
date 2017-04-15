@@ -7,7 +7,34 @@ const nightmare = new Nightmare({ show: false });
 
 db.all( function( docs ) {
 
-  const urls = flightLinks.generate( docs, 7 )
+  // const urls = flightLinks.generate( docs, 7 )
+
+  const urls = [
+    { path: 'https://www.google.co.uk/flights/#search;f=EDI;t=STN;d=2017-04-18;r=2017-04-19',
+      from: 'EDI',
+      depDate: '2017-04-18',
+      retDate: '2017-04-19',
+      to: 'STN' },
+    { path: 'https://www.google.co.uk/flights/#search;f=EDI;t=STN;d=2017-04-18;r=2017-04-20',
+      from: 'EDI',
+      depDate: '2017-04-18',
+      retDate: '2017-04-20',
+      to: 'STN' },
+    { path: 'https://www.google.co.uk/flights/#search;f=EDI;t=STN;d=2017-04-19;r=2017-04-19',
+      from: 'EDI',
+      depDate: '2017-04-19',
+      retDate: '2017-04-19',
+      to: 'STN' },
+    { path: 'https://www.google.co.uk/flights/#search;f=EDI;t=STN;d=2017-04-19;r=2017-04-20',
+      from: 'EDI',
+      depDate: '2017-04-19',
+      retDate: '2017-04-20',
+      to: 'STN' },
+    { path: 'https://www.google.co.uk/flights/#search;f=EDI;t=STN;d=2017-04-20;r=2017-04-20',
+      from: 'EDI',
+      depDate: '2017-04-20',
+      retDate: '2017-04-20',
+      to: 'STN' }]
 
   urls.reduce(function(accumulator, url) {
     return accumulator.then(function(results) {
@@ -24,9 +51,9 @@ db.all( function( docs ) {
             return flightStrings
         })
         .then(function(result){
-          // console.log( result )
+
           result.forEach( ( flightString ) => {
-            const flightInfo = flightStrings.convert( url.to, url.depDate, url.returnDate, flightString );
+            const flightInfo = flightStrings.convert( url.to, url.depDate, url.retDate, flightString );
             db.addOne( url.from, flightInfo )
 
             console.log( flightInfo )

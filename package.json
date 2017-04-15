@@ -9,12 +9,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.17.1",
     "casper": "^0.1.1",
     "d3-dsv": "^1.0.5",
     "dom-parser": "^0.1.5",
     "express": "^4.15.2",
     "install": "^0.8.8",
+    "lodash": "^4.17.4",
     "moment": "^2.18.1",
     "mongodb": "^2.2.25",
     "nightmare": "^2.10.0",

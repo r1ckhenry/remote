@@ -11,11 +11,6 @@ const flights = [ '£289\nround trip\n\n06:50 – 14:15\nBritish Airways\n7h 25m
   '£495\nround trip\n\n06:15 – 15:50\nIcelandair, Air France · HOP!\n9h 35m\n1 stop\n4h 10m in CDG\n' ]
 
 test( "should split array by line return", () => {
-    const expectedResult = {
-      arrTime: "14:15",
-      depTime: "06:10",
-      duration: "8h 05m",
-      price: 2995,
-    }
-    expect( flightStrings.convert( flights[1] ) ).toEqual( expectedResult )
+    const expectedResult = {"arrTime": "14:15", "depTime": "06:10", "departureDate": "14-05-2017", "duration": "8h 05m", "price": 2995, "returnDate": "16-05-2017", "to": "STN"}
+    expect( flightStrings.convert( "STN", "14-05-2017", "16-05-2017", flights[1] ) ).toEqual( expectedResult )
 })

@@ -2,13 +2,8 @@ var express = require( 'express' );
 var app = express();
 var path = require('path');
 var fs = require( 'fs' );
-// var bodyParser = require('body-parser')
 
 var db = require( "./flights/db/index" );
-
-// app.use( bodyParser.urlencoded({ extended: true }) )
-
-// var flightsController = require( "./flights/index" )
 
 var recursive = require('recursive-readdir');
 
