@@ -5,69 +5,116 @@ const flightStrings = require( "./utils/flightStrings.js" )
 
 const nightmare = new Nightmare({ show: false });
 
-db.all( function( docs ) {
+module.exports = ( routes, numberOfDays ) => {
 
-  // const urls = flightLinks.generate( docs, 7 )
+  // const urls = flightLinks.generate( airports, 21 )
 
-  const urls = [
-    { path: 'https://www.google.co.uk/flights/#search;f=EDI;t=STN;d=2017-04-18;r=2017-04-19',
-      from: 'EDI',
-      depDate: '2017-04-18',
-      retDate: '2017-04-19',
-      to: 'STN' },
-    { path: 'https://www.google.co.uk/flights/#search;f=EDI;t=STN;d=2017-04-18;r=2017-04-20',
-      from: 'EDI',
-      depDate: '2017-04-18',
-      retDate: '2017-04-20',
-      to: 'STN' },
-    { path: 'https://www.google.co.uk/flights/#search;f=EDI;t=STN;d=2017-04-19;r=2017-04-19',
-      from: 'EDI',
-      depDate: '2017-04-19',
-      retDate: '2017-04-19',
-      to: 'STN' },
-    { path: 'https://www.google.co.uk/flights/#search;f=EDI;t=STN;d=2017-04-19;r=2017-04-20',
-      from: 'EDI',
-      depDate: '2017-04-19',
-      retDate: '2017-04-20',
-      to: 'STN' },
-    { path: 'https://www.google.co.uk/flights/#search;f=EDI;t=STN;d=2017-04-20;r=2017-04-20',
-      from: 'EDI',
-      depDate: '2017-04-20',
-      retDate: '2017-04-20',
-      to: 'STN' }]
-
-  urls.reduce(function(accumulator, url) {
+  routes.reduce(function(accumulator, route) {
     return accumulator.then(function(results) {
-      console.log( "URL", url.to )
-      return nightmare.goto(url.path)
-        .wait(10000)
-        .evaluate( () => {
-            const allFlights = document.querySelectorAll( ".OMOBOQD-d-P a" )
-            const flightStrings = []
+      console.log( "Flying from EDI to ", route.to )
 
-            for ( var i = 0; i < allFlights.length; i++ ) {
-              flightStrings.push( allFlights[i].innerText )
-            }
-            return flightStrings
-        })
-        .then(function(result){
 
-          result.forEach( ( flightString ) => {
-            const flightInfo = flightStrings.convert( url.to, url.depDate, url.retDate, flightString );
-            db.addOne( url.from, flightInfo )
+        return nightmare.goto(route.path)
+          .wait( 5000 )
+          // .wait( "div.gwt-HTML.OMOBOQD-d-P" )
+          .evaluate( () => {
+              const allFlights = document.querySelectorAll( ".OMOBOQD-d-P a" )
+              const flightStrings = []
 
-            console.log( flightInfo )
+              for ( var i = 0; i < allFlights.length; i++ ) {
+                flightStrings.push( allFlights[i].innerText )
+              }
+              return flightStrings
           })
+          .then(function(result){
 
-          results.push(result);
-          return results;
-        });
+            result.forEach( ( flightString ) => {
+              const flightInfo = flightStrings.convert( route.to, route.depDate, route.retDate, flightString );
+              // db.addOne( route.from, flightInfo )
+              results.push(flightInfo);
+
+              // console.log( flightInfo )
+            })
+
+            return results;
+          });
+
+
+
+
     });
   }, Promise.resolve([])).then(function(results){
       console.dir(results);
   });
 
-})
+}
+
+
+
+
+// db.all( function( docs ) {
+//
+//   // const urls = flightLinks.generate( docs, 7 )
+//
+//   const urls = [
+//     { path: 'https://www.google.co.uk/flights/#search;f=EDI;t=STN;d=2017-04-18;r=2017-04-19',
+//       from: 'EDI',
+//       depDate: '2017-04-18',
+//       retDate: '2017-04-19',
+//       to: 'STN' },
+//     { path: 'https://www.google.co.uk/flights/#search;f=EDI;t=STN;d=2017-04-18;r=2017-04-20',
+//       from: 'EDI',
+//       depDate: '2017-04-18',
+//       retDate: '2017-04-20',
+//       to: 'STN' },
+//     { path: 'https://www.google.co.uk/flights/#search;f=EDI;t=STN;d=2017-04-19;r=2017-04-19',
+//       from: 'EDI',
+//       depDate: '2017-04-19',
+//       retDate: '2017-04-19',
+//       to: 'STN' },
+//     { path: 'https://www.google.co.uk/flights/#search;f=EDI;t=STN;d=2017-04-19;r=2017-04-20',
+//       from: 'EDI',
+//       depDate: '2017-04-19',
+//       retDate: '2017-04-20',
+//       to: 'STN' },
+//     { path: 'https://www.google.co.uk/flights/#search;f=EDI;t=STN;d=2017-04-20;r=2017-04-20',
+//       from: 'EDI',
+//       depDate: '2017-04-20',
+//       retDate: '2017-04-20',
+//       to: 'STN' }]
+//
+//   urls.reduce(function(accumulator, url) {
+//     return accumulator.then(function(results) {
+//       console.log( "URL", url.to )
+//       return nightmare.goto(url.path)
+//         .wait(10000)
+//         .evaluate( () => {
+//             const allFlights = document.querySelectorAll( ".OMOBOQD-d-P a" )
+//             const flightStrings = []
+//
+//             for ( var i = 0; i < allFlights.length; i++ ) {
+//               flightStrings.push( allFlights[i].innerText )
+//             }
+//             return flightStrings
+//         })
+//         .then(function(result){
+//
+//           result.forEach( ( flightString ) => {
+//             const flightInfo = flightStrings.convert( url.to, url.depDate, url.retDate, flightString );
+//             db.addOne( url.from, flightInfo )
+//
+//             console.log( flightInfo )
+//           })
+//
+//           results.push(result);
+//           return results;
+//         });
+//     });
+//   }, Promise.resolve([])).then(function(results){
+//       console.dir(results);
+//   });
+//
+// })
 
 
 

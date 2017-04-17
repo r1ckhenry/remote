@@ -1,13 +1,13 @@
 var MongoClient = require('mongodb').MongoClient;
 
 module.exports = {
-  
+
   all: function( callback ) {
     MongoClient.connect( 'mongodb://localhost:27017/flights', function( err, db ) {
       if ( db ) {
         var collection = db.collection( "airports" );
         collection.find().toArray(function(err, docs){
-          callback(docs.slice( 400,500 ));
+          callback(docs);
           db.close();
         });
       }

@@ -26,7 +26,7 @@ module.exports = {
         flightInfo = Object.assign( {}, flightInfo, { depTime: depTime, arrTime: arrTime } )
       }
 
-      if ( info.includes( "h" ) && info.includes( "m" ) ) {
+      if ( info.includes( "h " ) && info.includes( "m" ) ) {
         flightInfo = Object.assign( {}, flightInfo, { duration: info } )
       }
 

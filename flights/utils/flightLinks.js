@@ -2,6 +2,11 @@ var moment = require( "moment" )
 
 module.exports = {
 
+  generateForOneRoute: function( airport, days ) {
+    var dates = this.datesFromTodayTo( days )
+    return this.createLinks( airport.code, dates )
+  },
+
   generate: function( collection, days ) {
     var dates = this.datesFromTodayTo( days )
 
@@ -45,14 +50,16 @@ module.exports = {
         var datesSubset = dates.slice( i, dates.length )
 
         datesSubset.forEach( ( dateSubset, i ) => {
-          var link = {
-            path: "https://www.google.co.uk/flights/#search;f=EDI;t=" + code + ";d=" + date + ";r=" + dateSubset + "",
-            from: "EDI",
-            depDate: date,
-            retDate: dateSubset,
-            to: code
+          if ( dateSubset !== date ) {
+            var link = {
+              path: "https://www.google.co.uk/flights/#search;f=EDI;t=" + code + ";d=" + date + ";r=" + dateSubset + "",
+              from: "EDI",
+              depDate: date,
+              retDate: dateSubset,
+              to: code
+            }
+            links.push( link )
           }
-          links.push( link )
         })
 
       })
