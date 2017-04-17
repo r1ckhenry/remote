@@ -2,6 +2,7 @@ const Nightmare = require('nightmare');
 const db = require( "./db/index.js" );
 const flightLinks = require( "./utils/flightLinks.js" )
 const flightStrings = require( "./utils/flightStrings.js" )
+const flightAnalysis = require( "./utils/flightAnalysis.js" )
 
 const nightmare = new Nightmare({ show: false });
 
@@ -15,8 +16,8 @@ module.exports = ( routes, numberOfDays ) => {
 
 
         return nightmare.goto(route.path)
-          .wait( 5000 )
-          // .wait( "div.gwt-HTML.OMOBOQD-d-P" )
+          // .wait( 5000 )
+          .wait( "div.gwt-HTML.OMOBOQD-d-P" )
           .evaluate( () => {
               const allFlights = document.querySelectorAll( ".OMOBOQD-d-P a" )
               const flightStrings = []
@@ -43,7 +44,14 @@ module.exports = ( routes, numberOfDays ) => {
 
 
     });
-  }, Promise.resolve([])).then(function(results){
+  }, Promise.resolve([])).then(function(flights){
+      var flights = flightAnalysis.sortedFlightPricesFromAirport( flights )
+      var avgPriceOfRoute = flightAnalysis.avgPriceOfRouteFromAirport( flights )
+      var results = flights.map( ( flight ) => {
+        return Object.assign( {}, flight, { percentPriceDiff: flightAnalysis.calcRoutePriceComparedToAverage( avgPriceOfRoute, flight ) } )
+      })
+
+
       console.dir(results);
   });
 

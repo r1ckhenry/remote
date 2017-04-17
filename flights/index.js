@@ -4,11 +4,8 @@ const flightLinks = require( "./utils/flightLinks.js" )
 
 
 db.all( ( airports ) => {
-  var routeLinks = flightLinks.generateForOneRoute( airports[201], 3 )
+  var routeLinks = flightLinks.generateForOneRoute( airports[201], 10 )
 
-  // console.log( routeLinks )
-
+  // console.log( routeLinks.length )
   scrape( routeLinks )
-
-  // scrape( airports )
 });

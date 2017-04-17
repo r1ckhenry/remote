@@ -1,81 +1,221 @@
 const flightAnalysis = require( "./flightAnalysis" )
 
-const airport = {
-  "code": "EDI",
-  "name": "Edinburgh",
-  "latitude": "55.95",
-  "longitude": "-3.3725",
-  "routes": [
-    {
-    "to": "STN",
-    "departureDate": "2017-04-18",
-    "returnDate": "2017-04-19",
-    "price": 104,
-    "depTime": "19:35",
-    "arrTime": "20:55",
-    "duration": "1h 20m"
-    },
-    {
-    "to": "STN",
-    "departureDate": "2017-04-18",
-    "returnDate": "2017-04-19",
-    "price": 111,
-    "depTime": "18:15",
-    "arrTime": "19:40",
-    "duration": "1h 25m"
-    },
-    {
-    "to": "GLA",
-    "departureDate": "2017-04-18",
-    "returnDate": "2017-04-19",
-    "price": 150,
-    "depTime": "18:00",
-    "arrTime": "19:25",
-    "duration": "1h 25m"
-    },
-    {
-    "to": "GLA",
-    "departureDate": "2017-04-18",
-    "returnDate": "2017-04-19",
-    "price": 128,
-    "depTime": "14:40",
-    "arrTime": "16:05",
-    "duration": "1h 25m"
-    }
-  ]
-}
+const routes = [ { to: 'LGA',
+    departureDate: '2017-04-17',
+    returnDate: '2017-04-18',
+    price: 1235,
+    depTime: '17:35',
+    arrTime: '13:49+1',
+    duration: '25h 14m' },
+  { to: 'LGA',
+    departureDate: '2017-04-17',
+    returnDate: '2017-04-18',
+    price: 1697,
+    depTime: '16:00',
+    arrTime: '07:48+1',
+    duration: '20h 48m' },
+  { to: 'LGA',
+    departureDate: '2017-04-17',
+    returnDate: '2017-04-18',
+    price: 1697,
+    depTime: '16:00',
+    arrTime: '08:22+1',
+    duration: '21h 22m' },
+  { to: 'LGA',
+    departureDate: '2017-04-17',
+    returnDate: '2017-04-18',
+    price: 1697,
+    depTime: '17:30',
+    arrTime: '07:19+1',
+    duration: '18h 49m' },
+  { to: 'LGA',
+    departureDate: '2017-04-17',
+    returnDate: '2017-04-18',
+    price: 1748,
+    depTime: '19:35',
+    arrTime: '18:44+1',
+    duration: '28h 09m' },
+  { to: 'LGA',
+    departureDate: '2017-04-17',
+    returnDate: '2017-04-18',
+    price: 1750,
+    depTime: '18:05',
+    arrTime: '14:56+1',
+    duration: '25h 51m' },
+  { to: 'LGA',
+    departureDate: '2017-04-17',
+    returnDate: '2017-04-18',
+    price: 1753,
+    depTime: '16:00',
+    arrTime: '14:56+1',
+    duration: '27h 56m' },
+  { to: 'LGA',
+    departureDate: '2017-04-17',
+    returnDate: '2017-04-18',
+    price: 1958,
+    depTime: '18:05',
+    arrTime: '14:41+1',
+    duration: '25h 36m' },
+  { to: 'LGA',
+    departureDate: '2017-04-17',
+    returnDate: '2017-04-19',
+    price: 946,
+    depTime: '17:35',
+    arrTime: '16:19+1',
+    duration: '27h 44m' },
+  { to: 'LGA',
+    departureDate: '2017-04-17',
+    returnDate: '2017-04-19',
+    price: 1023,
+    depTime: '17:35',
+    arrTime: '13:49+1',
+    duration: '25h 14m' },
+  { to: 'LGA',
+    departureDate: '2017-04-17',
+    returnDate: '2017-04-19',
+    price: 1250,
+    depTime: '16:40',
+    arrTime: '17:21+1',
+    duration: '29h 41m' },
+  { to: 'LGA',
+    departureDate: '2017-04-17',
+    returnDate: '2017-04-19',
+    price: 1698,
+    depTime: '17:30',
+    arrTime: '07:19+1',
+    duration: '18h 49m' },
+  { to: 'LGA',
+    departureDate: '2017-04-17',
+    returnDate: '2017-04-19',
+    price: 1698,
+    depTime: '16:00',
+    arrTime: '07:19+1',
+    duration: '20h 19m' },
+  { to: 'LGA',
+    departureDate: '2017-04-17',
+    returnDate: '2017-04-19',
+    price: 1778,
+    depTime: '18:05',
+    arrTime: '14:56+1',
+    duration: '25h 51m' },
+  { to: 'LGA',
+    departureDate: '2017-04-17',
+    returnDate: '2017-04-19',
+    price: 1782,
+    depTime: '16:00',
+    arrTime: '14:56+1',
+    duration: '27h 56m' },
+  { to: 'LGA',
+    departureDate: '2017-04-17',
+    returnDate: '2017-04-19',
+    price: 1912,
+    depTime: '18:30',
+    arrTime: '19:04+1',
+    duration: '29h 34m' },
+  { to: 'LGA',
+    departureDate: '2017-04-18',
+    returnDate: '2017-04-19',
+    price: 568,
+    depTime: '06:00',
+    arrTime: '16:19',
+    duration: '15h 19m' },
+  { to: 'LGA',
+    departureDate: '2017-04-18',
+    returnDate: '2017-04-19',
+    price: 568,
+    depTime: '11:00',
+    arrTime: '21:29',
+    duration: '15h 29m' },
+  { to: 'LGA',
+    departureDate: '2017-04-18',
+    returnDate: '2017-04-19',
+    price: 1137,
+    depTime: '06:20',
+    arrTime: '16:19',
+    duration: '14h 59m' },
+  { to: 'LGA',
+    departureDate: '2017-04-18',
+    returnDate: '2017-04-19',
+    price: 1135,
+    depTime: '08:20',
+    arrTime: '20:34',
+    duration: '17h 14m' },
+  { to: 'LGA',
+    departureDate: '2017-04-18',
+    returnDate: '2017-04-19',
+    price: 1135,
+    depTime: '11:00',
+    arrTime: '20:34',
+    duration: '14h 34m' },
+  { to: 'LGA',
+    departureDate: '2017-04-18',
+    returnDate: '2017-04-19',
+    price: 1205,
+    depTime: '08:20',
+    arrTime: '19:29',
+    duration: '16h 09m' },
+  { to: 'LGA',
+    departureDate: '2017-04-18',
+    returnDate: '2017-04-19',
+    price: 1698,
+    depTime: '08:00',
+    arrTime: '16:21',
+    duration: '13h 21m' },
+  { to: 'LGA',
+    departureDate: '2017-04-18',
+    returnDate: '2017-04-19',
+    price: 1726,
+    depTime: '08:00',
+    arrTime: '18:23',
+    duration: '15h 23m' },
+  { to: 'LGA',
+    departureDate: '2017-04-18',
+    returnDate: '2017-04-19',
+    price: 1880,
+    depTime: '08:00',
+    arrTime: '18:03',
+    duration: '15h 03m' },
+  { to: 'LGA',
+    departureDate: '2017-04-18',
+    returnDate: '2017-04-19',
+    price: 1912,
+    depTime: '06:50',
+    arrTime: '19:04',
+    duration: '17h 14m' },
+  { to: 'LGA',
+    departureDate: '2017-04-18',
+    returnDate: '2017-04-19',
+    price: 2322,
+    depTime: '06:20',
+    arrTime: '17:57',
+    duration: '16h 37m' } ]
 
 test( "should return avg price of route from airport", () => {
-    expect( flightAnalysis.avgPriceOfRouteFromAirport( airport, "STN" ) ).toBe( 107.5 )
+  expect( flightAnalysis.avgPriceOfRouteFromAirport( routes ) ).toBe( 1515.11 )
 })
 
-// test( "should return how much as a % a route is above or below average", () => {
-//     expect( flightAnalysis.calcRoutePriceComparedToAverage( airport, airport.routes[0] ) ).toBe( -3 )
+test( "should sort routes based on price", () => {
+  const expected = {"arrTime": "16:19", "depTime": "06:00", "departureDate": "2017-04-18", "duration": "15h 19m", "price": 568, "returnDate": "2017-04-19", "to": "LGA"}
+  expect( flightAnalysis.sortedFlightPricesFromAirport( routes )[0] ).toEqual( expected )
+})
+
+test( "should return how much as a % a route is above or below average", () => {
+  const avgPrice = flightAnalysis.avgPriceOfRouteFromAirport( routes )
+  const route = flightAnalysis.sortedFlightPricesFromAirport( routes )[0]
+  // 100 - 37.49 = 62.51
+  expect( flightAnalysis.calcRoutePriceComparedToAverage( avgPrice, route ) ).toBe( 62.51 )
+})
+
+// test( "should return cheapest by route", () => {
+//     const expected = {
+//       "to": "STN",
+//       "departureDate": "2017-04-18",
+//       "returnDate": "2017-04-19",
+//       "price": 104,
+//       "depTime": "19:35",
+//       "arrTime": "20:55",
+//       "duration": "1h 20m"
+//     }
+//
+//     expect( flightAnalysis.sortedFlightPricesFromAirport( airport )[0] ).toEqual( expected )
 // })
-
-test( "should sort by route", () => {
-    const expected = {
-      "to": "GLA",
-      "departureDate": "2017-04-18",
-      "returnDate": "2017-04-19",
-      "price": 150,
-      "depTime": "18:00",
-      "arrTime": "19:25",
-      "duration": "1h 25m"
-    }
-    expect( flightAnalysis.sortedFlightPricesFromAirport( airport )[3] ).toEqual( expected )
-})
-
-test( "should return cheapest by route", () => {
-    const expected = {
-      "to": "STN",
-      "departureDate": "2017-04-18",
-      "returnDate": "2017-04-19",
-      "price": 104,
-      "depTime": "19:35",
-      "arrTime": "20:55",
-      "duration": "1h 20m"
-    }
-
-    expect( flightAnalysis.sortedFlightPricesFromAirport( airport )[0] ).toEqual( expected )
-})

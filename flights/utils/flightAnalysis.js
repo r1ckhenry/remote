@@ -2,16 +2,17 @@ var _ = require( "lodash" )
 
 module.exports = {
 
-  sortedFlightPricesFromAirport: function( airport ) {
-    return _.sortBy( airport.routes, "price" )
+  sortedFlightPricesFromAirport: function( routes ) {
+    return _.sortBy( routes, "price" )
   },
 
-  avgPriceOfRouteFromAirport: function( airport, code ) {
-    var prices = _.filter( airport.routes, function( route ) {
-      return route.to == code
-    });
+  avgPriceOfRouteFromAirport: function( routes ) {
+    return +( _.sumBy( routes, "price" ) / routes.length ).toFixed( 2 )
+  },
 
-    return _.sumBy( prices, "price" ) / prices.length
+  calcRoutePriceComparedToAverage: function( avgPrice, route ) {
+    var percentage = ( route.price / avgPrice ) * 100;
+    return +( 100 - percentage ).toFixed( 2 )
   }
 
 }
