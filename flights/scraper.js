@@ -4,15 +4,17 @@ const flightLinks = require( "./utils/flightLinks.js" )
 const flightStrings = require( "./utils/flightStrings.js" )
 const flightAnalysis = require( "./utils/flightAnalysis.js" )
 
-const nightmare = new Nightmare({ show: false });
 
-module.exports = ( routes, numberOfDays ) => {
+module.exports = ( routes ) => {
+
+  const nightmare = new Nightmare({ show: false });
 
   // const urls = flightLinks.generate( airports, 21 )
 
   routes.reduce(function(accumulator, route) {
     return accumulator.then(function(results) {
       console.log( "Flying from EDI to ", route.to )
+      console.log( "URL ", route.path )
 
 
         return nightmare.goto(route.path)
@@ -28,7 +30,7 @@ module.exports = ( routes, numberOfDays ) => {
               return flightStrings
           })
           .then(function(result){
-
+            console.log( "hit then", result )
             result.forEach( ( flightString ) => {
               const flightInfo = flightStrings.convert( route.to, route.depDate, route.retDate, flightString );
               // db.addOne( route.from, flightInfo )
@@ -38,11 +40,8 @@ module.exports = ( routes, numberOfDays ) => {
             })
 
             return results;
-          });
-
-
-
-
+          })
+          .catch( () => { return null; } )
     });
   }, Promise.resolve([])).then(function(flights){
       var flights = flightAnalysis.sortedFlightPricesFromAirport( flights )
